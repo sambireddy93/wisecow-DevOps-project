@@ -5,6 +5,25 @@ This project demonstrates the containerization and deployment of the Wisecow app
 
 The application is packaged into a Docker container, deployed to a Kubernetes cluster, and exposed securely using NGINX Ingress with TLS support. A CI/CD pipeline using GitHub Actions automatically builds and pushes the Docker image whenever changes are pushed to the repository.
 
+**Architecture**
+
+User Browser
+     │
+     ▼
+HTTPS Request
+     │
+     ▼
+NGINX Ingress Controller
+     │
+     ▼
+Kubernetes Service
+     │
+     ▼
+Wisecow Pod
+     │
+     ▼
+Docker Container (Wisecow Application)
+
 **Technologies Used**
 
 Docker – Containerization of the application
@@ -19,20 +38,7 @@ GitHub Container Registry (GHCR) – Container image storage
 
 Linux – Base environment
 
-Architecture
-User (Browser)
-      │
-      ▼
-NGINX Ingress Controller
-      │
-      ▼
-Kubernetes Service
-      │
-      ▼
-Pod
-      │
-      ▼
-Docker Container (Wisecow App)
+
 
 **Project Structure**
 wisecow-DevOps-project
