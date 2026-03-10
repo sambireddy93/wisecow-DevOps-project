@@ -1,4 +1,6 @@
-name: Wisecow CI/CD Pipeline
+permissions:
+  contents: read
+  packages: writename: Wisecow CI/CD Pipeline
 
 on:
   push:
