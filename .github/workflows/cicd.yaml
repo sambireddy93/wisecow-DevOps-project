@@ -1,6 +1,4 @@
-permissions:
-  contents: read
-  packages: writename: Wisecow CI/CD Pipeline
+name: Wisecow CI/CD Pipeline
 
 on:
   push:
@@ -8,8 +6,11 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/wisecow
 
     steps:
       - name: Checkout Code
@@ -22,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/wisecow:latest .
+        run: docker build -t $IMAGE_NAME:latest .
 
       - name: Push Docker Image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/wisecow:latest
+        run: docker push $IMAGE_NAME:latest
