@@ -1,35 +1,9 @@
-# Cow wisdom web server
-
-## Prerequisites
-
-```
-sudo apt install fortune-mod cowsay -y
-```
-
-## How to use?
-
-1. Run `./wisecow.sh`
-2. Point the browser to server port (default 4499)
-
-## What to expect?
-![wisecow](https://github.com/nyrahul/wisecow/assets/9133227/8d6bfde3-4a5a-480e-8d55-3fef60300d98)
-
-# Problem Statement
-Deploy the wisecow application as a k8s app
-
-## Requirement
-1. Create Dockerfile for the image and corresponding k8s manifest to deploy in k8s env. The wisecow service should be exposed as k8s service.
-2. Github action for creating new image when changes are made to this repo
-3. [Challenge goal]: Enable secure TLS communication for the wisecow app.
-
-## Expected Artifacts
-1. Github repo containing the app with corresponding dockerfile, k8s manifest, any other artifacts needed.
-2. Github repo with corresponding github action.
-3. Github repo should be kept private and the access should be enabled for following github IDs: nyrahul
-
-
-**Containerized Application Deployment using Docker & Kubernetes
+**Wisecow DevOps Project
 Project Overview**
+
+This project demonstrates the containerization and deployment of the Wisecow application using Docker and Kubernetes.
+
+The application is packaged into a Docker container, deployed to a Kubernetes cluster, and exposed securely using NGINX Ingress with TLS support. A CI/CD pipeline using GitHub Actions automatically builds and pushes the Docker image whenever changes are pushed to the repository.
 
 **Technologies Used**
 
@@ -37,16 +11,15 @@ Docker – Containerization of the application
 
 Kubernetes – Container orchestration
 
-NGINX Ingress Controller – Exposing the application to external users
+NGINX Ingress Controller – External access to the application
 
-AWS EC2 – Hosting the Kubernetes cluster
+GitHub Actions – CI/CD pipeline
 
-Linux – Server environment
+GitHub Container Registry (GHCR) – Container image storage
 
-Git & GitHub – Version control**
+Linux – Base environment
 
-**Architecture**
-
+Architecture
 User (Browser)
       │
       ▼
@@ -59,58 +32,83 @@ Kubernetes Service
 Pod
       │
       ▼
-Docker Container (Application)
-
-**Architecture Explanation**
-A user accesses the application through a web browser.
-
-The request reaches the NGINX Ingress Controller.
-
-The ingress forwards the request to the Kubernetes Service.
-
-The service routes the request to the Pod.
-
-The pod runs the Docker container containing the application.
+Docker Container (Wisecow App)
 
 **Project Structure**
- ├── Dockerfile
- ├── deployment.yaml
- ├── service.yaml
- ├── ingress.yaml
- ├── README.md
-Setup and Deployment
-1. Clone the Repository
-git clone <your-repository-url>
-cd <project-folder>
-2. Build the Docker Image
-docker build -t myapp .
-3. Push Image to Docker Hub
-docker tag myapp <dockerhub-username>/myapp
-docker push <dockerhub-username>/myapp
-4. Deploy Application to Kubernetes
+wisecow-DevOps-project
+│
+├── Dockerfile
+├── wisecow.sh
+├── README.md
+│
+├── k8s
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── ingress.yaml
+│   └── tls.yaml
+│
+└── .github
+    └── workflows
+        └── cicd.yaml
+Docker Image
 
-**Apply the deployment configuration:**
+The Docker image is automatically built and pushed to:
 
+ghcr.io/sambireddy93/wisecow:latest
+CI/CD Pipeline
+
+**A GitHub Actions workflow automatically:**
+
+Checks out the repository
+
+Builds the Docker image
+
+Pushes the image to GitHub Container Registry (GHCR)
+
+Pipeline location:
+
+.github/workflows/cicd.yaml
+
+**Pipeline flow:**
+
+Git Push
+   │
+   ▼
+GitHub Actions
+   │
+   ▼
+Build Docker Image
+   │
+   ▼
+Push Image to GHCR
+Kubernetes Deployment
+Deploy the Application
 kubectl apply -f deployment.yaml
-5. Create Kubernetes Service
+Create the Service
 kubectl apply -f service.yaml
-6. Configure NGINX Ingress
+Configure Ingress
 kubectl apply -f ingress.yaml
+TLS Configuration
+
+**TLS communication is enabled using Kubernetes Ingress.**
+
+Files used:
+
+ingress.yaml
+tls.yaml
+
+Ingress uses a TLS secret to provide HTTPS access to the Wisecow application.
+
 Verify Deployment
-
-**Check the resources in the cluster:**
-
 kubectl get pods
 kubectl get svc
 kubectl get ingress
 Access the Application
+https://<ingress-host>
 
-Open your browser and use:
+**Learning outcomes**
 
-http://<EC2-Public-IP>
-Learning Outcomes
-
-**Through this project the following DevOps skills were practiced:**
+Through this project the following DevOps skills were practiced:
 
 Docker containerization
 
@@ -120,22 +118,9 @@ Kubernetes services
 
 NGINX ingress configuration
 
-Cloud deployment using AWS EC2
+GitHub Actions CI/CD pipeline
 
-Infrastructure management using Linux
+Secure communication using TLS
 
-**Future Improvements**
-
-Implement CI/CD using Jenkins or GitHub Actions
-
-## TLS Configuration
-
-**TLS is implemented using Kubernetes Ingress and a TLS secret.**
-
-**Files used:**
-- ingress.yaml
-- tls.yaml
-
-The ingress routes HTTPS traffic securely to the Wisecow service.
-
-
+**Author**
+Sambireddy
