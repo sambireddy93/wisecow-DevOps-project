@@ -128,5 +128,14 @@ Infrastructure management using Linux
 
 Implement CI/CD using Jenkins or GitHub Actions
 
+## TLS Configuration
+
+**TLS is implemented using Kubernetes Ingress and a TLS secret.**
+
+**Files used:**
+- ingress.yaml
+- tls.yaml
+
+The ingress routes HTTPS traffic securely to the Wisecow service.
 
 
